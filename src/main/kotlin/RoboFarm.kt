@@ -117,10 +117,16 @@ fun MainMenu() {
     RoundedCard(modifier = Modifier.size(Dp.Infinity, 305.dp)) {
         Column(
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
+            verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
             modifier = Modifier.padding(15.dp)
         ) {
             MenuItem("All",
+                Icons.Default.AccountBox,
+                hoverColor = DarkColors.surface,
+                onClick = {
+                    println("Hello")
+                })
+            MenuItem("Persons",
                 Icons.Default.AccountBox,
                 hoverColor = DarkColors.surface,
                 onClick = {
