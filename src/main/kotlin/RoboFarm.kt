@@ -5,6 +5,9 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -52,6 +55,20 @@ fun RoboForm() {
                     .background(DarkColors.surfaceContainer)
             )
             {
+                Spacer(modifier = Modifier.height(116.dp))
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                )
+                {
+                    items(24) {index ->
+                        RoundedCard(modifier = Modifier.size(250.dp, 120.dp)) {
+                        }
+                    }
+                }
 
             }
 
@@ -104,10 +121,12 @@ fun ActionButton() {
                 contentDescription = "",
                 modifier = Modifier.size(16.dp)
             )
-            Text(text = "Add New",
+            Text(
+                text = "Add New",
                 color = Color.White,
                 fontSize = 12.sp,
-                fontFamily = font)
+                fontFamily = font
+            )
         }
     }
 }
@@ -148,7 +167,7 @@ fun MenuItem(
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
 
-    Row (
+    Row(
         horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -167,11 +186,13 @@ fun MenuItem(
                 .align(Alignment.CenterVertically),
             tint = DarkColors.secondary,
         )
-        Text(text = text,
+        Text(
+            text = text,
             color = Color.White,
             fontSize = 14.sp,
             fontFamily = font,
-            modifier = Modifier.align(Alignment.CenterVertically))
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
     }
 }
 
