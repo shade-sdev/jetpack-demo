@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ui.theme.DarkColors
 import ui.theme.Font
 import ui.theme.PasswordColors
 
@@ -68,13 +67,15 @@ fun SecVault() {
 
 @Composable
 fun SideBar() {
-    Column {
+    Column(
+        modifier = Modifier.padding(PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp))
+    )
+    {
 
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .weight(1.8f)
-                .background(DarkColors.primary)
+                .weight(1.6f)
         )
         {
             Header()
@@ -84,19 +85,20 @@ fun SideBar() {
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
                 .weight(7f)
-                .background(DarkColors.tertiary)
         )
         {
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth())
+                modifier = Modifier.fillMaxWidth()
+            )
             {
                 HorizontalDivider(
-                    color = Color.White,
+                    color = Color.Gray,
                     thickness = 0.2.dp,
-                    modifier = Modifier.width(100.dp))
+                    modifier = Modifier.fillMaxWidth(0.8f)
+                )
             }
 
         }
@@ -104,6 +106,7 @@ fun SideBar() {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
+                .fillMaxWidth()
                 .weight(0.8f),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
@@ -118,7 +121,7 @@ fun SideBar() {
 fun Header() {
 
     Column(
-        modifier = Modifier.padding(15.dp)
+        modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -128,23 +131,29 @@ fun Header() {
             modifier = Modifier.weight(1f)
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Center
         ) {
-            Icon(
-                painter = painterResource("icon.png"),
-                contentDescription = "Setting button",
-                modifier = Modifier.size(22.dp).align(Alignment.CenterVertically),
-                tint = Color.Unspecified
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
             )
-            Text(
-                text = "SecVault",
-                color = Color.White,
-                fontFamily = Font.RussoOne,
-                fontWeight = FontWeight.Normal,
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-            )
+            {
+                Icon(
+                    painter = painterResource("icon.png"),
+                    contentDescription = "Setting button",
+                    modifier = Modifier.size(30.dp),
+                    tint = Color.Unspecified
+                )
+                Text(
+                    text = "SecVault",
+                    color = Color.White,
+                    fontFamily = Font.RussoOne,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
 
         Row(
@@ -154,17 +163,21 @@ fun Header() {
             horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.Start),
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+                modifier = Modifier.fillMaxWidth().fillMaxHeight()
+            ) {
                 Icon(
                     painter = painterResource("icon.png"),
                     contentDescription = "User Icon",
                     modifier = Modifier.size(28.dp).align(Alignment.CenterVertically),
                     tint = Color.Unspecified
                 )
-                Column(verticalArrangement = Arrangement.spacedBy((-12).dp, Alignment.CenterVertically),
-                    horizontalAlignment = Alignment.Start) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy((-12).dp, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
                         text = "Shade",
                         color = Color.White,
@@ -194,26 +207,33 @@ fun Footer() {
     val isHovered by interactionSource.collectIsHoveredAsState()
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(PaddingValues(start = 15.dp))
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.Bottom,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
             .hoverable(interactionSource)
             .clickable(onClick = { println("Settings") }, indication = null, interactionSource = interactionSource)
     )
     {
-        Icon(
-            imageVector = Icons.Default.Settings,
-            contentDescription = "Setting button",
-            modifier = Modifier.size(18.dp).align(Alignment.CenterVertically),
-            tint = if (isHovered) Color.Gray else Color.White,
-        )
-        Text(
-            text = "Settings",
-            color = if (isHovered) Color.Gray else Color.White,
-            fontFamily = Font.RussoOne,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center,
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.Start)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Setting button",
+                modifier = Modifier.size(18.dp),
+                tint = if (isHovered) Color.Gray else Color.White,
+            )
+            Text(
+                modifier = Modifier,
+                text = "Settings",
+                color = if (isHovered) Color.Gray else Color.White,
+                fontFamily = Font.RussoOne,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+            )
+        }
     }
 }
