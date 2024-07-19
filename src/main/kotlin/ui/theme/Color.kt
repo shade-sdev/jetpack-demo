@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 val primary = Color(0xFF191919)
 val secondary = Color(0xFF121212)
 val tertiary = Color(0xFF0a0a0a)
+val onSurface = Color(0xFF292929)
+val outline = Color(0xFFBABABA)
 
 val primaryLight = Color(0xFF306A43)
 val onPrimaryLight = Color(0xFFFFFFFF)

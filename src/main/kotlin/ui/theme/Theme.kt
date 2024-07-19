@@ -6,7 +6,9 @@ import androidx.compose.material3.lightColorScheme
 val PasswordColors = darkColorScheme(
     primary = primary,
     secondary = secondary,
-    tertiary = tertiary
+    tertiary = tertiary,
+    onSurface = onSurface,
+    outline = outline
 )
 
 val LightColors = lightColorScheme(

@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.sp
 object Font {
     val RussoOne = FontFamily(Font("RussoOne.ttf"))
     val Aldrich = FontFamily(Font("Aldrich-Regular.ttf"))
+    val RobotoThin = FontFamily(Font("Roboto-Light.ttf"))
 }
 
 val font = FontFamily(
