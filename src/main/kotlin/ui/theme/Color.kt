@@ -2,6 +2,10 @@ package ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val primary = Color(0xFF191919)
+val secondary = Color(0xFF121212)
+val tertiary = Color(0xFF0a0a0a)
+
 val primaryLight = Color(0xFF306A43)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFB2F1BF)

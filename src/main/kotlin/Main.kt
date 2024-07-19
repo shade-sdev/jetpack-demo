@@ -3,6 +3,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -11,6 +13,8 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.DpSize
@@ -69,16 +73,22 @@ fun main() = application {
 
     val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors;
 
-    Window(onCloseRequest = ::exitApplication,
+    Window(
+        onCloseRequest = ::exitApplication,
         resizable = true,
-        state = WindowState(size = DpSize(1200.dp, 800.dp)),
-        ) {
-        MaterialTheme(
-            colorScheme = colors,
-            typography = customTypography,
-        )
-        {
-            RoboForm()
+        state = WindowState(size = DpSize(1150.dp, 700.dp)),
+        undecorated = true,
+        transparent = true,
+        icon = painterResource("icon.png")
+    ) {
+        WindowDraggableArea(modifier = Modifier.clip(RoundedCornerShape(10.dp))) {
+            MaterialTheme(
+                colorScheme = colors,
+                typography = customTypography,
+            )
+            {
+                SecVault()
+            }
         }
     }
 }

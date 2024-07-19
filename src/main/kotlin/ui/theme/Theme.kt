@@ -3,6 +3,12 @@ package ui.theme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 
+val PasswordColors = darkColorScheme(
+    primary = primary,
+    secondary = secondary,
+    tertiary = tertiary
+)
+
 val LightColors = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
