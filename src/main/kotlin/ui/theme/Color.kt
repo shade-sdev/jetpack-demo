@@ -7,6 +7,7 @@ val secondary = Color(0xFF121212)
 val tertiary = Color(0xFF0a0a0a)
 val onSurface = Color(0xFF292929)
 val outline = Color(0xFFBABABA)
+val textAlt = Color(0xFF8592A5)
 
 val primaryLight = Color(0xFF306A43)
 val onPrimaryLight = Color(0xFFFFFFFF)

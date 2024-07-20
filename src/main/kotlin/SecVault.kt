@@ -126,7 +126,13 @@ fun PasswordFilterHeader() {
                     shape = IconButtonDefaults.filledShape,
                     onClick = {},
                     enabled = true,
-                    modifier = Modifier.height(36.dp).width(36.dp)
+                    modifier = Modifier.height(36.dp).width(36.dp),
+                    colors = IconButtonColors(
+                        containerColor = Color(0xFFFB8C00),
+                        contentColor = Color.White,
+                        disabledContentColor = Color(0xFFFB8C00),
+                        disabledContainerColor = Color(0xFFFB8C00)
+                    )
                 )
                 {
                     Icon(Icons.Outlined.Add, contentDescription = "Localized description")
@@ -160,20 +166,32 @@ fun MyCustomTextField(
         onValueChange = { user = it },
         interactionSource = interactionSource,
         modifier = modifier,
-        textStyle = TextStyle(fontFamily = Font.RussoOne, color = Color.Gray, textAlign = TextAlign.Start),
+        textStyle = TextStyle(
+            fontFamily = Font.RussoOne,
+            color = PasswordColors.outlineVariant,
+            textAlign = TextAlign.Start,
+            fontSize = 13.sp
+        ),
         singleLine = true
     ) { innerTextField ->
 
         TextFieldDefaults.DecorationBox(
             innerTextField = innerTextField,
-            placeholder = { Text(placeholder, fontSize = 12.sp, fontFamily = Font.RussoOne) },
+            placeholder = {
+                Text(
+                    placeholder,
+                    fontSize = 13.sp,
+                    fontFamily = Font.RussoOne,
+                    modifier = Modifier.padding(PaddingValues(bottom = 3.dp))
+                )
+            },
             value = user,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(top = 2.dp).width(20.dp).height(20.dp)
+                    tint = PasswordColors.outlineVariant,
+                    modifier = Modifier.width(20.dp).height(20.dp)
 
                 )
             },
@@ -187,20 +205,16 @@ fun MyCustomTextField(
                 disabledTextColor = Color.LightGray,
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
-                focusedTextColor = Color.Gray,
-                unfocusedTextColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray,
-                unfocusedPlaceholderColor = Color.Gray
+                focusedTextColor = PasswordColors.outlineVariant,
+                unfocusedTextColor = PasswordColors.outlineVariant,
+                focusedPlaceholderColor = PasswordColors.outlineVariant,
+                unfocusedPlaceholderColor = PasswordColors.outlineVariant
             ),
             shape = RoundedCornerShape(20.dp),
-            contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
-                top = 0.dp,
-                bottom = 0.dp,
-            )
+            contentPadding = PaddingValues(0.dp)
         )
     }
 }
-
 
 @Composable
 fun SideBar() {

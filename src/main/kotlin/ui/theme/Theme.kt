@@ -8,7 +8,8 @@ val PasswordColors = darkColorScheme(
     secondary = secondary,
     tertiary = tertiary,
     onSurface = onSurface,
-    outline = outline
+    outline = outline,
+    outlineVariant = textAlt
 )
 
 val LightColors = lightColorScheme(
