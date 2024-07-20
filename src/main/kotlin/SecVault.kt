@@ -111,6 +111,7 @@ fun PasswordFilterHeader() {
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
                 .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         )
         {
@@ -173,7 +174,7 @@ fun MyCustomTextField(
                     imageVector = Icons.Default.Search,
                     contentDescription = "",
                     tint = Color.Gray,
-                    modifier = Modifier.padding(top = 2.dp)
+                    modifier = Modifier.padding(top = 2.dp).width(20.dp).height(20.dp)
 
                 )
             },
