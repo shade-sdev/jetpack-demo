@@ -129,13 +129,13 @@ fun PasswordItem() {
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = "User Icon",
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(38.dp),
                 tint = Color.White
             )
         }
-
+        Spacer(modifier = Modifier.width(8.dp))
         Column(
-            modifier = Modifier.weight(8.5f),
+            modifier = Modifier.weight(8.5f).fillMaxHeight().fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy((-8).dp, Alignment.CenterVertically)
         )
         {
@@ -160,11 +160,12 @@ fun PasswordItem() {
 
         }
 
-        Column(modifier = Modifier.weight(0.5f)) {
+        Column(modifier = Modifier.weight(0.5f).fillMaxHeight().fillMaxWidth(),
+               verticalArrangement = Arrangement.Center) {
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = "User Icon",
-                modifier = Modifier.size(15.dp),
+                modifier = Modifier.size(38.dp),
                 tint = Color.White
             )
         }
