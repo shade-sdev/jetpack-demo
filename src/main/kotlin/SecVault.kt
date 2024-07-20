@@ -81,7 +81,6 @@ fun PasswordLayout() {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.LightGray)
                 .weight(1.8f)
         )
         {
@@ -103,24 +102,26 @@ fun PasswordLayout() {
 fun PasswordFilterHeader() {
 
     Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth().fillMaxHeight()
     )
     {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.LightGray)
                 .weight(1f),
             horizontalArrangement = Arrangement.SpaceBetween
         )
         {
-            Column(modifier = Modifier.weight(8f)) {
+            Column(modifier = Modifier.weight(8.5f).fillMaxHeight().fillMaxWidth()) {
                 MyCustomTextField(placeholder = "Search Passwords", modifier = Modifier.height(36.dp).fillMaxWidth())
-
             }
 
-            Column(modifier = Modifier.weight(2f)) {
+            Column(
+                modifier = Modifier.weight(1.5f).fillMaxHeight().fillMaxWidth(),
+                horizontalAlignment = Alignment.End
+            ) {
                 FilledIconButton(
                     shape = IconButtonDefaults.filledShape,
                     onClick = {},
@@ -159,7 +160,8 @@ fun MyCustomTextField(
         onValueChange = { user = it },
         interactionSource = interactionSource,
         modifier = modifier,
-        textStyle = TextStyle(fontFamily = Font.RussoOne, color = Color.Gray)
+        textStyle = TextStyle(fontFamily = Font.RussoOne, color = Color.Gray, textAlign = TextAlign.Start),
+        singleLine = true
     ) { innerTextField ->
 
         TextFieldDefaults.DecorationBox(
@@ -171,7 +173,7 @@ fun MyCustomTextField(
                     imageVector = Icons.Default.Search,
                     contentDescription = "",
                     tint = Color.Gray,
-                    modifier = Modifier.padding(top = 4.dp) // Adjust padding for vertical alignment
+                    modifier = Modifier.padding(top = 2.dp)
 
                 )
             },
@@ -190,7 +192,7 @@ fun MyCustomTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray
             ),
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(20.dp),
             contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
                 top = 0.dp,
                 bottom = 0.dp,
