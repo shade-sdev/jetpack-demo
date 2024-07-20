@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +24,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.application
 import ui.theme.Font
 import ui.theme.PasswordColors
 
@@ -104,18 +102,36 @@ fun PasswordLayout() {
 @Composable
 fun PasswordFilterHeader() {
 
-    Column(verticalArrangement = Arrangement.SpaceBetween,
-           horizontalAlignment = Alignment.CenterHorizontally
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     )
     {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
                 .background(Color.LightGray)
-                .weight(1f)
+                .weight(1f),
+            horizontalArrangement = Arrangement.SpaceBetween
         )
         {
-            MyCustomTextField(placeholder = "Search Passwords", modifier = Modifier.height(36.dp).fillMaxWidth())
+            Column(modifier = Modifier.weight(8f)) {
+                MyCustomTextField(placeholder = "Search Passwords", modifier = Modifier.height(36.dp).fillMaxWidth())
+
+            }
+
+            Column(modifier = Modifier.weight(2f)) {
+                FilledIconButton(
+                    shape = IconButtonDefaults.filledShape,
+                    onClick = {},
+                    enabled = true,
+                    modifier = Modifier.height(36.dp).width(36.dp)
+                )
+                {
+                    Icon(Icons.Outlined.Add, contentDescription = "Localized description")
+
+                }
+            }
         }
 
         Row(
@@ -135,29 +151,33 @@ fun MyCustomTextField(
         modifier: Modifier = Modifier,
         placeholder: String = "",
 
-) {
+        ) {
     var user by remember { mutableStateOf("") }
     val interactionSource = remember { MutableInteractionSource() }
-    BasicTextField(value = user,
-                   onValueChange = {user = it},
-                   interactionSource = interactionSource,
-                   modifier = modifier
+    BasicTextField(
+        value = user,
+        onValueChange = { user = it },
+        interactionSource = interactionSource,
+        modifier = modifier,
+        textStyle = TextStyle(fontFamily = Font.RussoOne, color = Color.Gray)
     ) { innerTextField ->
 
         TextFieldDefaults.DecorationBox(
             innerTextField = innerTextField,
-            placeholder = { Text(placeholder, fontSize = 12.sp) },
+            placeholder = { Text(placeholder, fontSize = 12.sp, fontFamily = Font.RussoOne) },
             value = user,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "",
-                    tint = Color.Gray
+                    tint = Color.Gray,
+                    modifier = Modifier.padding(top = 4.dp) // Adjust padding for vertical alignment
+
                 )
             },
             enabled = true,
-        interactionSource = interactionSource,
-           singleLine = true,
+            interactionSource = interactionSource,
+            singleLine = true,
             visualTransformation = VisualTransformation.None,
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
@@ -173,7 +193,7 @@ fun MyCustomTextField(
             shape = RoundedCornerShape(8.dp),
             contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
                 top = 0.dp,
-                bottom = 0.dp
+                bottom = 0.dp,
             )
         )
     }

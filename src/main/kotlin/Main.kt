@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.window.WindowDraggableArea
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +59,7 @@ fun App() {
                             else Icons.Default.Visibility, contentDescription = ""
                         )
                     }
-                }
+                },
             )
             Button(onClick = {}) {
                 Text(text = "Login")
@@ -71,7 +70,7 @@ fun App() {
 
 fun main() = application {
 
-    val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors;
+    val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors
 
     Window(
         onCloseRequest = ::exitApplication,
