@@ -7,27 +7,25 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.NoteAlt
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.application
 import ui.theme.Font
 import ui.theme.PasswordColors
 
@@ -57,7 +55,7 @@ fun SecVault() {
                     .background(PasswordColors.secondary)
             )
             {
-
+                PasswordLayout()
             }
 
             Column(
@@ -73,6 +71,114 @@ fun SecVault() {
         }
     }
 }
+
+@Composable
+fun PasswordLayout() {
+    Column(
+        modifier = Modifier.padding(PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp))
+    )
+    {
+
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.LightGray)
+                .weight(1.8f)
+        )
+        {
+            PasswordFilterHeader()
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.Cyan)
+                .weight(8.2f)
+        )
+        {
+        }
+    }
+}
+
+@Composable
+fun PasswordFilterHeader() {
+
+    Column(verticalArrangement = Arrangement.SpaceBetween,
+           horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.LightGray)
+                .weight(1f)
+        )
+        {
+            MyCustomTextField(placeholder = "Search Passwords", modifier = Modifier.height(36.dp).fillMaxWidth())
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.Red)
+                .weight(1f)
+        )
+        {
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyCustomTextField(
+        modifier: Modifier = Modifier,
+        placeholder: String = "",
+
+) {
+    var user by remember { mutableStateOf("") }
+    val interactionSource = remember { MutableInteractionSource() }
+    BasicTextField(value = user,
+                   onValueChange = {user = it},
+                   interactionSource = interactionSource,
+                   modifier = modifier
+    ) { innerTextField ->
+
+        TextFieldDefaults.DecorationBox(
+            innerTextField = innerTextField,
+            placeholder = { Text(placeholder, fontSize = 12.sp) },
+            value = user,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "",
+                    tint = Color.Gray
+                )
+            },
+            enabled = true,
+        interactionSource = interactionSource,
+           singleLine = true,
+            visualTransformation = VisualTransformation.None,
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledTextColor = Color.LightGray,
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White,
+                focusedTextColor = Color.Gray,
+                unfocusedTextColor = Color.Gray,
+                focusedPlaceholderColor = Color.Gray,
+                unfocusedPlaceholderColor = Color.Gray
+            ),
+            shape = RoundedCornerShape(8.dp),
+            contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
+                top = 0.dp,
+                bottom = 0.dp
+            )
+        )
+    }
+}
+
 
 @Composable
 fun SideBar() {
@@ -110,7 +216,6 @@ fun SideBar() {
         }
     }
 }
-
 
 @Composable
 fun SideBarMenu() {
