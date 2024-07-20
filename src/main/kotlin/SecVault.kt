@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Add
@@ -99,6 +100,9 @@ fun PasswordLayout() {
 
 @Composable
 fun PasswordFilterHeader() {
+    val options = listOf("Name", "Favourite", "Created")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf(options[0]) }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -144,10 +148,104 @@ fun PasswordFilterHeader() {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.Red)
-                .weight(1f)
+                .weight(1f),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         )
         {
+            Column(
+                modifier = Modifier.weight(6f)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+            )
+            {
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text = "All Passwords",
+                    color = Color.White,
+                    fontFamily = Font.RussoOne,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                )
+            }
+
+            Column(
+                modifier = Modifier.weight(5f)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center,
+            )
+            {
+                Row(
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                )
+                {
+                    Column(
+                        modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Text(
+                            text = "Sort By",
+                            color = Color.White,
+                            fontFamily = Font.Aldrich,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 12.sp,
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+                    )
+                    {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .clickable(
+                                    onClick = { expanded = !expanded },
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.End,
+                        )
+                        {
+                            Text(selectedOption, fontFamily = Font.RussoOne, fontSize = 10.sp, color = Color.White)
+                            Icon(
+                                Icons.Default.ArrowDropDown,
+                                contentDescription = "Dropdown Menu",
+                                tint = Color.White,
+                                modifier = Modifier.padding(PaddingValues(top = 4.dp))
+                            )
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                modifier = Modifier.background(PasswordColors.primary)
+                            ) {
+                                options.forEach { selectionOption ->
+                                    DropdownMenuItem(onClick = {
+                                        selectedOption = selectionOption
+                                        expanded = false
+                                    }) {
+                                        Text(
+                                            text = selectionOption,
+                                            fontFamily = Font.RussoOne,
+                                            fontSize = 10.sp,
+                                            color = Color.White
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
         }
     }
 }
