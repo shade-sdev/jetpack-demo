@@ -74,14 +74,14 @@ fun SecVault() {
 @Composable
 fun PasswordLayout() {
     Column(
-        modifier = Modifier.padding(PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp))
+        modifier = Modifier.padding(PaddingValues(start = 20.dp, end = 20.dp, top = 24.dp, bottom = 20.dp))
     )
     {
 
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .weight(1.8f)
+                .weight(1.6f)
         )
         {
             PasswordFilterHeader()
@@ -91,7 +91,7 @@ fun PasswordLayout() {
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
                 .background(Color.Cyan)
-                .weight(8.2f)
+                .weight(8.4f)
         )
         {
         }
@@ -179,33 +179,33 @@ fun PasswordFilterHeader() {
             )
             {
                 Row(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                    modifier = Modifier.fillMaxHeight().fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
                 )
                 {
                     Column(
-                        modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth(),
+                        modifier = Modifier.fillMaxHeight(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.End
                     ) {
                         Text(
                             text = "Sort By",
                             color = Color.White,
-                            fontFamily = Font.Aldrich,
+                            fontFamily = Font.RobotoThin,
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
                         )
                     }
-
+                    Spacer(Modifier.width(10.dp))
                     Column(
-                        modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth(),
+                        modifier = Modifier.fillMaxHeight(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.End
                     )
                     {
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
                                 .clickable(
                                     onClick = { expanded = !expanded },
                                     interactionSource = remember { MutableInteractionSource() },
