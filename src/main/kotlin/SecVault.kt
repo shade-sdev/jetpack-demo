@@ -5,6 +5,8 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -90,10 +92,81 @@ fun PasswordLayout() {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.Cyan)
                 .weight(8.4f)
         )
         {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            )
+            {
+                items(24) { index ->
+                    PasswordItem()
+                }
+            }
+
+        }
+    }
+}
+
+@Composable
+fun PasswordItem() {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+
+    Row(
+        modifier = Modifier.height(60.dp).fillMaxWidth()
+            .background(if (isHovered) PasswordColors.tertiary else Color.Transparent, shape = RoundedCornerShape(6.dp))
+            .padding(PaddingValues(start = 5.dp, end = 5.dp))
+            .clickable(onClick = {}, indication = null, interactionSource = interactionSource)
+            .hoverable(interactionSource),
+        verticalAlignment = Alignment.CenterVertically
+    )
+    {
+
+        Column(modifier = Modifier.weight(1f)) {
+            Icon(
+                imageVector = Icons.Default.AccountCircle,
+                contentDescription = "User Icon",
+                modifier = Modifier.size(30.dp),
+                tint = Color.White
+            )
+        }
+
+        Column(
+            modifier = Modifier.weight(8.5f),
+            verticalArrangement = Arrangement.spacedBy((-8).dp, Alignment.CenterVertically)
+        )
+        {
+
+            Row {
+                Text(
+                    text = "Spotify",
+                    fontSize = 16.sp,
+                    fontFamily = Font.RussoOne,
+                    color = Color.White
+                )
+            }
+
+            Row {
+                Text(
+                    text = "shade@shade.ga",
+                    fontSize = 12.sp,
+                    fontFamily = Font.RobotoThin,
+                    color = PasswordColors.outline
+                )
+            }
+
+        }
+
+        Column(modifier = Modifier.weight(0.5f)) {
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = "User Icon",
+                modifier = Modifier.size(15.dp),
+                tint = Color.White
+            )
         }
     }
 }
