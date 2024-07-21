@@ -1,4 +1,5 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
@@ -66,11 +67,160 @@ fun SecVault() {
                     .background(PasswordColors.tertiary)
             )
             {
-
+                PasswordInfo()
             }
 
         }
     }
+}
+
+@Composable
+fun PasswordInfo() {
+    Column(
+        modifier = Modifier
+            .padding(PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp))
+            .fillMaxWidth()
+            .fillMaxHeight()
+    )
+    {
+
+        Row(
+            modifier = Modifier.weight(1.5f)
+                .fillMaxWidth()
+                .fillMaxHeight()
+        )
+        {
+            PasswordInfoHeader()
+        }
+
+        Row(
+            modifier = Modifier.weight(5f)
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.Blue)
+        )
+        {
+
+        }
+
+        Row(
+            modifier = Modifier.weight(6f)
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.Yellow)
+        )
+        {
+
+        }
+
+    }
+}
+
+@Composable
+fun PasswordInfoHeader() {
+
+    Row(
+        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Top
+    )
+    {
+        Column(
+            modifier = Modifier.weight(7f).fillMaxHeight().fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        )
+        {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+
+                Column() {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = "User Icon",
+                        modifier = Modifier.size(56.dp),
+                        tint = Color.White
+                    )
+                }
+
+                Column(verticalArrangement = Arrangement.spacedBy((-6).dp, Alignment.CenterVertically)) {
+
+                    Row() {
+                        Text(
+                            text = "Spotify",
+                            fontSize = 20.sp,
+                            fontFamily = Font.RussoOne,
+                            color = Color.White
+                        )
+                    }
+
+                    Row() {
+                        Text(
+                            text = "Shade@Shade.ga",
+                            fontSize = 16.sp,
+                            fontFamily = Font.Aldrich,
+                            color = PasswordColors.outline
+                        )
+                    }
+
+                }
+
+            }
+        }
+
+        Column(
+            modifier = Modifier.weight(3f)
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .padding(PaddingValues(top = 4.dp)),
+            horizontalAlignment = Alignment.End
+        )
+        {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Column() {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "User Icon",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                }
+
+                Column() {
+                    val interactionSource = remember { MutableInteractionSource() }
+                    val isHovered by interactionSource.collectIsHoveredAsState()
+
+                    OutlinedButton(
+                        onClick = {},
+                        modifier = Modifier.size(height = 30.dp, width = 60.dp)
+                            .hoverable(interactionSource),
+                        shape = RoundedCornerShape(size = 4.dp),
+                        contentPadding = PaddingValues(4.dp),
+                        border = BorderStroke(2.dp, color = Color.White),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = if (isHovered) Color.White else Color.Transparent,
+                        )
+
+                    )
+                    {
+                        Text(
+                            text = "Edit",
+                            fontSize = 12.sp,
+                            fontFamily = Font.RussoOne,
+                            color = if (isHovered) PasswordColors.tertiary else Color.White
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -160,8 +310,10 @@ fun PasswordItem() {
 
         }
 
-        Column(modifier = Modifier.weight(0.5f).fillMaxHeight().fillMaxWidth(),
-               verticalArrangement = Arrangement.Center) {
+        Column(
+            modifier = Modifier.weight(0.5f).fillMaxHeight().fillMaxWidth(),
+            verticalArrangement = Arrangement.Center
+        ) {
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = "User Icon",
