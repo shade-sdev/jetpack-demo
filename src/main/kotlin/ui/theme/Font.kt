@@ -11,6 +11,8 @@ object Font {
     val RussoOne = FontFamily(Font("RussoOne.ttf"))
     val Aldrich = FontFamily(Font("Aldrich-Regular.ttf"))
     val RobotoThin = FontFamily(Font("Roboto-Light.ttf"))
+    val RobotoRegular = FontFamily(Font("Roboto-Regular.ttf"))
+
 }
 
 val font = FontFamily(

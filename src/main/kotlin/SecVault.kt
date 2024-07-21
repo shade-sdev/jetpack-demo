@@ -20,12 +20,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.theme.Font
@@ -97,10 +100,9 @@ fun PasswordInfo() {
             modifier = Modifier.weight(5f)
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.Blue)
         )
         {
-
+            PasswordForm()
         }
 
         Row(
@@ -113,6 +115,86 @@ fun PasswordInfo() {
 
         }
 
+    }
+}
+
+@Composable
+fun PasswordForm() {
+    Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+
+        Row(modifier = Modifier.weight(1f)) {
+            PasswordFormTitle()
+        }
+
+        Row(modifier = Modifier.weight(9f)) {
+            var userName by remember { mutableStateOf("") }
+
+            Column() {
+                Row(modifier = Modifier.weight(1f)) {
+                    UnderLineTextFiled(
+                        field = userName,
+                        onFieldChange = { userName = it },
+                        label = "Username",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                Row(modifier = Modifier.weight(1f)) {
+                    UnderLineTextFiled(
+                        field = userName,
+                        onFieldChange = { userName = it },
+                        label = "Password",
+                        modifier = Modifier.fillMaxWidth(),
+                        isPassword = true
+                    )
+                }
+
+                Row(modifier = Modifier.weight(1f)) {
+                    UnderLineTextFiled(
+                        field = userName,
+                        onFieldChange = { userName = it },
+                        label = "Email",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                Row(modifier = Modifier.weight(1f)) {
+                    UnderLineTextFiled(
+                        field = userName,
+                        onFieldChange = { userName = it },
+                        label = "Website",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+            }
+        }
+
+    }
+}
+
+@Composable
+fun PasswordFormTitle() {
+    Column() {
+        Row() {
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "Details",
+                color = Color(0xFFFF6363),
+                fontFamily = Font.RussoOne,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+            )
+        }
+        Row() {
+            Column(modifier = Modifier.weight(0.3f)) {
+                HorizontalSpacer(thickness = 1.dp, width = 1f, color = Color(0xFFFF6363))
+            }
+
+            Column(modifier = Modifier.weight(0.7f)) {
+                HorizontalSpacer(thickness = 1.dp, width = 1f, color = Color(0xFF333333))
+            }
+        }
     }
 }
 
@@ -345,7 +427,10 @@ fun PasswordFilterHeader() {
         )
         {
             Column(modifier = Modifier.weight(8.5f).fillMaxHeight().fillMaxWidth()) {
-                MyCustomTextField(placeholder = "Search Passwords", modifier = Modifier.height(36.dp).fillMaxWidth())
+                RoundedFilledTextField(
+                    placeholder = "Search Passwords",
+                    modifier = Modifier.height(36.dp).fillMaxWidth()
+                )
             }
 
             Column(
@@ -473,70 +558,6 @@ fun PasswordFilterHeader() {
                 }
             }
         }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyCustomTextField(
-        modifier: Modifier = Modifier,
-        placeholder: String = "",
-
-        ) {
-    var user by remember { mutableStateOf("") }
-    val interactionSource = remember { MutableInteractionSource() }
-    BasicTextField(
-        value = user,
-        onValueChange = { user = it },
-        interactionSource = interactionSource,
-        modifier = modifier,
-        textStyle = TextStyle(
-            fontFamily = Font.RussoOne,
-            color = PasswordColors.outlineVariant,
-            textAlign = TextAlign.Start,
-            fontSize = 13.sp
-        ),
-        singleLine = true
-    ) { innerTextField ->
-
-        TextFieldDefaults.DecorationBox(
-            innerTextField = innerTextField,
-            placeholder = {
-                Text(
-                    placeholder,
-                    fontSize = 13.sp,
-                    fontFamily = Font.RussoOne,
-                    modifier = Modifier.padding(PaddingValues(bottom = 3.dp))
-                )
-            },
-            value = user,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "",
-                    tint = PasswordColors.outlineVariant,
-                    modifier = Modifier.width(20.dp).height(20.dp)
-
-                )
-            },
-            enabled = true,
-            interactionSource = interactionSource,
-            singleLine = true,
-            visualTransformation = VisualTransformation.None,
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledTextColor = Color.LightGray,
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                focusedTextColor = PasswordColors.outlineVariant,
-                unfocusedTextColor = PasswordColors.outlineVariant,
-                focusedPlaceholderColor = PasswordColors.outlineVariant,
-                unfocusedPlaceholderColor = PasswordColors.outlineVariant
-            ),
-            shape = RoundedCornerShape(20.dp),
-            contentPadding = PaddingValues(0.dp)
-        )
     }
 }
 
@@ -805,7 +826,11 @@ fun Footer() {
 }
 
 @Composable
-fun HorizontalSpacer() {
+fun HorizontalSpacer(
+        thickness: Dp = 0.2.dp,
+        color: Color = Color.Gray,
+        width: Float = 0.8f,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -813,9 +838,160 @@ fun HorizontalSpacer() {
     )
     {
         HorizontalDivider(
-            color = Color.Gray,
-            thickness = 0.2.dp,
-            modifier = Modifier.fillMaxWidth(0.8f)
+            color = color,
+            thickness = thickness,
+            modifier = Modifier.fillMaxWidth(width)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UnderLineTextFiled(
+        modifier: Modifier = Modifier,
+        label: String,
+        field: String,
+        onFieldChange: (String) -> Unit,
+        isPassword: Boolean = false,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    BasicTextField(
+        value = field,
+        onValueChange = onFieldChange,
+        interactionSource = interactionSource,
+        modifier = modifier,
+        textStyle = TextStyle(
+            fontFamily = Font.RussoOne,
+            color = Color.White,
+            textAlign = TextAlign.Start,
+            fontSize = 12.sp
+        ),
+        singleLine = true,
+        cursorBrush = SolidColor(Color.White),
+        visualTransformation = if (!isPassword || passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+    ) { innerTextField ->
+        TextFieldDefaults.DecorationBox(
+            interactionSource = interactionSource,
+            innerTextField = innerTextField,
+            enabled = true,
+            value = field,
+            singleLine = true,
+            visualTransformation = if (!isPassword || passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            label = {
+                Text(
+                    label,
+                    fontFamily = Font.RussoOne,
+                    textAlign = TextAlign.Start,
+                    fontSize = 10.sp,
+                    color = Color.Gray
+                )
+            },
+            trailingIcon = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.End),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        if (isPassword) {
+                            IconToggleButton(checked = passwordVisible, onCheckedChange = { passwordVisible = it }) {
+                                Icon(
+                                    imageVector = if (passwordVisible) Icons.Default.VisibilityOff
+                                    else Icons.Default.Visibility,
+                                    contentDescription = "",
+                                    modifier = Modifier.size(width = 15.dp, height = 15.dp),
+                                    tint = Color.Gray
+                                )
+                            }
+                        }
+                    }
+                    Column {
+                        Icon(
+                            imageVector = Icons.Default.ContentCopy,
+                            contentDescription = "",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(width = 15.dp, height = 15.dp)
+                        )
+                    }
+                    if (isPassword) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+                }
+            },
+            contentPadding = TextFieldDefaults.contentPaddingWithLabel(0.dp),
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color(0xFF333333),
+                unfocusedIndicatorColor = Color(0xFF333333),
+                disabledTextColor = Color.LightGray,
+                unfocusedContainerColor = Color.Transparent,
+                focusedContainerColor = Color.Transparent,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
+            ),
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RoundedFilledTextField(
+        modifier: Modifier = Modifier,
+        placeholder: String = "",
+) {
+    var user by remember { mutableStateOf("") }
+    val interactionSource = remember { MutableInteractionSource() }
+    BasicTextField(
+        value = user,
+        onValueChange = { user = it },
+        interactionSource = interactionSource,
+        modifier = modifier,
+        textStyle = TextStyle(
+            fontFamily = Font.RussoOne,
+            color = PasswordColors.outlineVariant,
+            textAlign = TextAlign.Start,
+            fontSize = 13.sp
+        ),
+        singleLine = true
+    ) { innerTextField ->
+
+        TextFieldDefaults.DecorationBox(
+            innerTextField = innerTextField,
+            placeholder = {
+                Text(
+                    placeholder,
+                    fontSize = 13.sp,
+                    fontFamily = Font.RussoOne,
+                    modifier = Modifier.padding(PaddingValues(bottom = 3.dp))
+                )
+            },
+            value = user,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "",
+                    tint = PasswordColors.outlineVariant,
+                    modifier = Modifier.width(20.dp).height(20.dp)
+
+                )
+            },
+            enabled = true,
+            interactionSource = interactionSource,
+            singleLine = true,
+            visualTransformation = VisualTransformation.None,
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledTextColor = Color.LightGray,
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White,
+                focusedTextColor = PasswordColors.outlineVariant,
+                unfocusedTextColor = PasswordColors.outlineVariant,
+                focusedPlaceholderColor = PasswordColors.outlineVariant,
+                unfocusedPlaceholderColor = PasswordColors.outlineVariant
+            ),
+            shape = RoundedCornerShape(20.dp),
+            contentPadding = PaddingValues(0.dp)
         )
     }
 }
