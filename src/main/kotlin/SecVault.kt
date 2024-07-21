@@ -198,7 +198,7 @@ fun PasswordInfoHeader() {
 
                     OutlinedButton(
                         onClick = {},
-                        modifier = Modifier.size(height = 30.dp, width = 60.dp)
+                        modifier = Modifier.size(height = 28.dp, width = 62.dp)
                             .hoverable(interactionSource),
                         shape = RoundedCornerShape(size = 4.dp),
                         contentPadding = PaddingValues(4.dp),
