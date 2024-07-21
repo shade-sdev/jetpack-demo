@@ -915,7 +915,7 @@ fun UnderLineTextFiled(
                         )
                     }
                     if (isPassword) {
-                        Spacer(modifier = Modifier.width(10.dp))
+                        Spacer(modifier = Modifier.width(12.dp))
                     }
                 }
             },
