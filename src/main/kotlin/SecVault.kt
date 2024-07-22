@@ -1,3 +1,4 @@
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -112,7 +113,12 @@ fun PasswordInfo() {
                 .background(Color.Yellow)
         )
         {
-
+            var progress by remember { mutableStateOf(0.1f) }
+            val animatedProgress by animateFloatAsState(
+                targetValue = progress,
+                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+            )
+            CircularProgressIndicator(progress = { animatedProgress }, trackColor = Color.White)
         }
 
     }
@@ -651,26 +657,26 @@ fun SideBarMenuSection() {
     Column {
         Spacer(Modifier.height(2.dp))
         SideBarMenuItem("Passwords",
-                        Icons.Default.Security,
-                        onClick = {
-                            println("Hello")
-                        })
+            Icons.Default.Security,
+            onClick = {
+                println("Hello")
+            })
 
         SideBarMenuItem("Notes",
-                        Icons.Default.NoteAlt,
-                        onClick = {
-                            println("Hello")
-                        })
+            Icons.Default.NoteAlt,
+            onClick = {
+                println("Hello")
+            })
     }
 }
 
 @Composable
 fun SideBarMenuItem(
-        text: String,
-        icon: ImageVector,
-        onClick: () -> Unit = {},
-        backgroundColor: Color = Color.Transparent,
-        hoverColor: Color = PasswordColors.onSurface,
+    text: String,
+    icon: ImageVector,
+    onClick: () -> Unit = {},
+    backgroundColor: Color = Color.Transparent,
+    hoverColor: Color = PasswordColors.onSurface,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -827,9 +833,9 @@ fun Footer() {
 
 @Composable
 fun HorizontalSpacer(
-        thickness: Dp = 0.2.dp,
-        color: Color = Color.Gray,
-        width: Float = 0.8f,
+    thickness: Dp = 0.2.dp,
+    color: Color = Color.Gray,
+    width: Float = 0.8f,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -848,11 +854,11 @@ fun HorizontalSpacer(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnderLineTextFiled(
-        modifier: Modifier = Modifier,
-        label: String,
-        field: String,
-        onFieldChange: (String) -> Unit,
-        isPassword: Boolean = false,
+    modifier: Modifier = Modifier,
+    label: String,
+    field: String,
+    onFieldChange: (String) -> Unit,
+    isPassword: Boolean = false,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -936,8 +942,8 @@ fun UnderLineTextFiled(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoundedFilledTextField(
-        modifier: Modifier = Modifier,
-        placeholder: String = "",
+    modifier: Modifier = Modifier,
+    placeholder: String = "",
 ) {
     var user by remember { mutableStateOf("") }
     val interactionSource = remember { MutableInteractionSource() }
