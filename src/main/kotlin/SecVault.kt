@@ -7,6 +7,7 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
@@ -20,8 +21,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -34,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.theme.Font
 import ui.theme.PasswordColors
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 @Preview
@@ -110,17 +115,179 @@ fun PasswordInfo() {
             modifier = Modifier.weight(6f)
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.Yellow)
         )
         {
-            var progress by remember { mutableStateOf(0.1f) }
-            val animatedProgress by animateFloatAsState(
-                targetValue = progress,
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-            )
-            CircularProgressIndicator(progress = { animatedProgress }, trackColor = Color.White)
+            PasswordMisc()
+        }
+    }
+}
+
+@Composable
+fun PasswordMisc() {
+    Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+
+        Row(modifier = Modifier.weight(2f).fillMaxHeight().fillMaxWidth()) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.CenterVertically)) {
+
+                Row() {
+                    Text(
+                        text = "Category", fontSize = 12.sp,
+                        fontFamily = Font.RobotoRegular,
+                        color = PasswordColors.outline
+                    )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(5) { index ->
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .background(Color(0xFF2B2B2B), shape = RoundedCornerShape(2.dp))
+                                    .size(width = 56.dp, height = 28.dp)
+                            ) {
+                                Text(
+                                    text = "Item $index",
+                                    fontSize = 12.sp,
+                                    fontFamily = Font.RobotoRegular,
+                                    color = Color(0xFFcd9b5b),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
 
+        Row(modifier = Modifier.weight(4f),
+            horizontalArrangement = Arrangement.spacedBy(20.dp, alignment = Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+
+            Column() {
+                PasswordMiscProgressIndicator()
+            }
+
+            Column() {
+                Row() {
+                    Text(
+                        text = "Password Score: 82%",
+                        fontSize = 14.sp,
+                        fontFamily = Font.RussoOne,
+                        color = Color.White,
+                    )
+                }
+
+                Row() {
+                    Column {
+                        Text(
+                            text = "Password Strength:",
+                            fontSize = 12.sp,
+                            fontFamily = Font.RobotoRegular,
+                            color = Color.Gray,
+                        )
+                    }
+
+                    Column {
+                        Text(
+                            text = "Good",
+                            fontSize = 12.sp,
+                            fontFamily = Font.RussoOne,
+                            color = Color(0xFF9AE6b4),
+                        )
+                    }
+                }
+            }
+
+        }
+
+        Row(modifier = Modifier.weight(3f)) {
+            Column() {
+
+                Row() {
+                    Column(verticalArrangement = Arrangement.spacedBy((-4).dp, alignment = Alignment.CenterVertically)) {
+
+                        Row() {
+                            Text(
+                                text = "Last Modified",
+                                fontSize = 10.sp,
+                                fontFamily = Font.RussoOne,
+                                color = Color(0xFF6C6C6C),
+                            )
+                        }
+
+                        Row() {
+                            Text(
+                                text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                                fontSize = 12.sp,
+                                fontFamily = Font.RussoOne,
+                                color = Color.Gray,
+                            )
+                        }
+                    }
+                }
+
+                Row() {
+                    Column(verticalArrangement = Arrangement.spacedBy((-4).dp, alignment = Alignment.CenterVertically)) {
+
+                        Row() {
+                            Text(
+                                text = "Created",
+                                fontSize = 10.sp,
+                                fontFamily = Font.RussoOne,
+                                color = Color(0xFF6C6C6C),
+                            )
+                        }
+
+                        Row() {
+                            Text(
+                                text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                                fontSize = 12.sp,
+                                fontFamily = Font.RussoOne,
+                                color = Color.Gray,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PasswordMiscProgressIndicator() {
+    var progress by remember { mutableStateOf(0.75f) }
+    val animatedProgress by animateFloatAsState(
+        targetValue = progress,
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.size(120.dp)
+    ) {
+        CircularProgressIndicator(
+            color = Color(0xFFE25C63),
+            progress = { animatedProgress },
+            trackColor = Color(0xFF1C1520),
+            strokeWidth = 12.dp,
+            strokeCap = StrokeCap.Round,
+            modifier = Modifier.size(120.dp)
+                .scale(scaleX = -1f, scaleY = 1f)
+        )
+        Text(
+            text = "82%",
+            color = Color.White,
+            fontFamily = Font.RussoOne,
+            fontSize = 22.sp
+        )
     }
 }
 
@@ -657,26 +824,26 @@ fun SideBarMenuSection() {
     Column {
         Spacer(Modifier.height(2.dp))
         SideBarMenuItem("Passwords",
-            Icons.Default.Security,
-            onClick = {
-                println("Hello")
-            })
+                        Icons.Default.Security,
+                        onClick = {
+                            println("Hello")
+                        })
 
         SideBarMenuItem("Notes",
-            Icons.Default.NoteAlt,
-            onClick = {
-                println("Hello")
-            })
+                        Icons.Default.NoteAlt,
+                        onClick = {
+                            println("Hello")
+                        })
     }
 }
 
 @Composable
 fun SideBarMenuItem(
-    text: String,
-    icon: ImageVector,
-    onClick: () -> Unit = {},
-    backgroundColor: Color = Color.Transparent,
-    hoverColor: Color = PasswordColors.onSurface,
+        text: String,
+        icon: ImageVector,
+        onClick: () -> Unit = {},
+        backgroundColor: Color = Color.Transparent,
+        hoverColor: Color = PasswordColors.onSurface,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -833,9 +1000,9 @@ fun Footer() {
 
 @Composable
 fun HorizontalSpacer(
-    thickness: Dp = 0.2.dp,
-    color: Color = Color.Gray,
-    width: Float = 0.8f,
+        thickness: Dp = 0.2.dp,
+        color: Color = Color.Gray,
+        width: Float = 0.8f,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -854,11 +1021,11 @@ fun HorizontalSpacer(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnderLineTextFiled(
-    modifier: Modifier = Modifier,
-    label: String,
-    field: String,
-    onFieldChange: (String) -> Unit,
-    isPassword: Boolean = false,
+        modifier: Modifier = Modifier,
+        label: String,
+        field: String,
+        onFieldChange: (String) -> Unit,
+        isPassword: Boolean = false,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -942,8 +1109,8 @@ fun UnderLineTextFiled(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoundedFilledTextField(
-    modifier: Modifier = Modifier,
-    placeholder: String = "",
+        modifier: Modifier = Modifier,
+        placeholder: String = "",
 ) {
     var user by remember { mutableStateOf("") }
     val interactionSource = remember { MutableInteractionSource() }
