@@ -241,7 +241,7 @@ fun PasswordInfoHeader() {
                     Row() {
                         Text(
                             text = "Shade@Shade.ga",
-                            fontSize = 16.sp,
+                            fontSize = 14.sp,
                             fontFamily = Font.Aldrich,
                             color = PasswordColors.outline
                         )
