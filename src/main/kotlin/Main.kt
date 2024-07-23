@@ -1,24 +1,15 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.window.WindowDraggableArea
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import cafe.adriel.voyager.navigator.Navigator
@@ -35,7 +26,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         resizable = true,
-        state = WindowState(size = DpSize(1150.dp, 700.dp)),
+        state = WindowState(size = DpSize(1150.dp, 700.dp), position = WindowPosition.Aligned(Alignment.Center)),
         undecorated = true,
         transparent = true,
         icon = painterResource("icon.png")
@@ -46,7 +37,7 @@ fun main() = application {
                 typography = customTypography,
             )
             {
-                Navigator(SecVault()) { navigator: Navigator ->
+                Navigator(LoginScreen()) { navigator: Navigator ->
                     SlideTransition(navigator)
                 }
             }

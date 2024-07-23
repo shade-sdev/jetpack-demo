@@ -1,5 +1,8 @@
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -51,7 +54,7 @@ class LoginScreen : Screen {
                 },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Button(onClick = {}) {
+                Button(onClick = { navigator?.push(SecVault()) }) {
                     Text(text = "Login")
                 }
                 Button(onClick = { navigator?.pop() }) {
