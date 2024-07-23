@@ -21,52 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import ui.theme.DarkColors
 import ui.theme.LightColors
 import ui.theme.customTypography
 
-@Composable
-@Preview
-fun App() {
-
-    var user by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-
-    MaterialTheme {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                5.dp,
-                Alignment.CenterVertically
-            ),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            OutlinedTextField(
-                value = user,
-                onValueChange = { user = it },
-                label = { Text("Username") },
-            )
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    IconToggleButton(checked = passwordVisible, onCheckedChange = { passwordVisible = it }) {
-                        Icon(
-                            imageVector = if (passwordVisible) Icons.Default.VisibilityOff
-                            else Icons.Default.Visibility, contentDescription = ""
-                        )
-                    }
-                },
-            )
-            Button(onClick = {}) {
-                Text(text = "Login")
-            }
-        }
-    }
-}
 
 fun main() = application {
 
@@ -86,7 +46,9 @@ fun main() = application {
                 typography = customTypography,
             )
             {
-                SecVault()
+                Navigator(SecVault()) { navigator: Navigator ->
+                    SlideTransition(navigator)
+                }
             }
         }
     }

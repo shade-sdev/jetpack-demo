@@ -15,6 +15,8 @@ repositories {
 }
 
 dependencies {
+    val voyagerVersion = "1.1.0-beta02"
+
     // Note, if you develop a library, you should use compose.desktop.common.
     // compose.desktop.currentOs should be used in launcher-sourceSet
     // (in a separate module for demo project and in testMain).
@@ -22,7 +24,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.materialIconsExtended)
     implementation(compose.material3)
-
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+    implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
 }
 
 compose.desktop {

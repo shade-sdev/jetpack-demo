@@ -35,14 +35,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import ui.theme.Font
 import ui.theme.PasswordColors
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+class SecVault : Screen {
+
+    @Composable
+    override fun Content() {
+        SecVaultContent()
+    }
+
+}
+
 @Composable
 @Preview
-fun SecVault() {
+fun SecVaultContent() {
     Surface(
         modifier = Modifier.fillMaxSize()
     )
@@ -450,9 +461,10 @@ fun PasswordInfoHeader() {
                 Column() {
                     val interactionSource = remember { MutableInteractionSource() }
                     val isHovered by interactionSource.collectIsHoveredAsState()
+                    val navigator = LocalNavigator.current
 
                     OutlinedButton(
-                        onClick = {},
+                        onClick = { navigator?.push(LoginScreen()) },
                         modifier = Modifier.size(height = 28.dp, width = 62.dp)
                             .hoverable(interactionSource),
                         shape = RoundedCornerShape(size = 4.dp),
