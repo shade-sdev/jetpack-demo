@@ -14,12 +14,21 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import org.jetbrains.exposed.sql.Database
+import org.koin.core.context.GlobalContext.startKoin
+import org.koin.dsl.module
+import org.koin.java.KoinJavaComponent.getKoin
 import ui.theme.DarkColors
 import ui.theme.LightColors
 import ui.theme.customTypography
 
 
 fun main() = application {
+    startKoin {
+        modules(databaseModule, repositoryModule)
+    }
+
+    getKoin().get<AppInitializer>().initialize()
 
     val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors
 
@@ -43,4 +52,15 @@ fun main() = application {
             }
         }
     }
+}
+
+val databaseModule = module {
+    single {
+        Database.connect("jdbc:sqlite:data.db", driver = "org.sqlite.JDBC")
+    }
+    single { AppInitializer() }
+}
+
+val repositoryModule = module {
+    single { StarwarsRepository() }
 }

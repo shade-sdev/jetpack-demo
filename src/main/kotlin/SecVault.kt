@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import org.koin.compose.koinInject
 import ui.theme.Font
 import ui.theme.PasswordColors
 import java.time.LocalDateTime
@@ -46,6 +47,9 @@ class SecVault : Screen {
 
     @Composable
     override fun Content() {
+        val userRepository: StarwarsRepository = koinInject()
+
+        println("StarWars Films: ${userRepository.findAll().joinToString { it.name }}")
         SecVaultContent()
     }
 
