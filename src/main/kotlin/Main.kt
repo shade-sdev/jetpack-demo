@@ -20,7 +20,6 @@ import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
-import org.koin.java.KoinJavaComponent.getKoin
 import ui.theme.DarkColors
 import ui.theme.LightColors
 import ui.theme.customTypography
@@ -30,8 +29,6 @@ fun main() = application {
     startKoin {
         modules(databaseModule, repositoryModule)
     }
-
-    getKoin().get<AppInitializer>().initialize()
 
     val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors
 
@@ -67,14 +64,15 @@ val databaseModule = module {
     }
 
     val dataSource = HikariDataSource(config)
-    val flyway = Flyway.configure().dataSource(dataSource).load()
+
+    Flyway.configure()
+        .dataSource(dataSource)
+        .load()
+        .migrate()
 
     single {
-        flyway.migrate()
         Database.connect(dataSource)
     }
-
-    single { AppInitializer() }
 }
 
 val repositoryModule = module {
