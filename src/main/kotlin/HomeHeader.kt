@@ -46,7 +46,7 @@ fun RatesStatus() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(modifier = Modifier.size(50.dp),
-                painter = painterResource("money.png"),
+                painter = painterResource("assets/money.png"),
                 contentDescription = ""
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -71,7 +71,7 @@ fun RatesStatus() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(modifier = Modifier.size(24.dp),
-                painter = painterResource("refresh.png"),
+                painter = painterResource("assets/refresh.png"),
                 contentDescription = "",
                 tint = Color.Unspecified
             )

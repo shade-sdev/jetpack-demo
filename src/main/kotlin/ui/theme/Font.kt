@@ -8,15 +8,15 @@ import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.sp
 
 object Font {
-    val RussoOne = FontFamily(Font("RussoOne.ttf"))
-    val Aldrich = FontFamily(Font("Aldrich-Regular.ttf"))
-    val RobotoThin = FontFamily(Font("Roboto-Light.ttf"))
-    val RobotoRegular = FontFamily(Font("Roboto-Regular.ttf"))
+    val RussoOne = FontFamily(Font("fonts/RussoOne.ttf"))
+    val Aldrich = FontFamily(Font("fonts/Aldrich-Regular.ttf"))
+    val RobotoThin = FontFamily(Font("fonts/Roboto-Light.ttf"))
+    val RobotoRegular = FontFamily(Font("fonts/Roboto-Regular.ttf"))
 
 }
 
 val font = FontFamily(
-    Font("Aldrich-Regular.ttf", FontWeight.Normal),
+    Font("fonts/Aldrich-Regular.ttf", FontWeight.Normal),
 )
 
 val customTypography = Typography(

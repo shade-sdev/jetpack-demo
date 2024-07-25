@@ -917,7 +917,7 @@ fun Header() {
             )
             {
                 Icon(
-                    painter = painterResource("icon.png"),
+                    painter = painterResource("assets/icon.png"),
                     contentDescription = "Setting button",
                     modifier = Modifier.size(30.dp),
                     tint = Color.Unspecified

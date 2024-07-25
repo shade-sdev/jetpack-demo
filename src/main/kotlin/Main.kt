@@ -38,7 +38,7 @@ fun main() = application {
         state = WindowState(size = DpSize(1150.dp, 700.dp), position = WindowPosition.Aligned(Alignment.Center)),
         undecorated = true,
         transparent = true,
-        icon = painterResource("icon.png")
+        icon = painterResource("assets/icon.png")
     ) {
         WindowDraggableArea(modifier = Modifier.clip(RoundedCornerShape(10.dp))) {
             MaterialTheme(
