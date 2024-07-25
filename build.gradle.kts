@@ -6,6 +6,7 @@ val koinVersion: String by project
 val koinComposeVersion: String by project
 val sqliteVersion: String by project
 val flywayVersion: String by project
+val hikariVersion: String by project
 
 plugins {
     kotlin("jvm")
@@ -36,6 +37,7 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
+    implementation("com.zaxxer:HikariCP:$hikariVersion")
 
     implementation("org.jetbrains.exposed", "exposed-core", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)

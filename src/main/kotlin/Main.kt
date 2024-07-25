@@ -14,6 +14,9 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
+import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
@@ -55,8 +58,19 @@ fun main() = application {
 }
 
 val databaseModule = module {
+    val config = HikariConfig().apply {
+        jdbcUrl = "jdbc:sqlite:data.db"
+        driverClassName = "org.sqlite.JDBC"
+        maximumPoolSize = 6
+        isReadOnly = false
+        transactionIsolation = "TRANSACTION_SERIALIZABLE"
+    }
+    val dataSource = HikariDataSource(config)
+    val flyway = Flyway.configure().dataSource(dataSource).load()
+
     single {
-        Database.connect("jdbc:sqlite:data.db", driver = "org.sqlite.JDBC")
+        flyway.migrate()
+        Database.connect(dataSource)
     }
     single { AppInitializer() }
 }
