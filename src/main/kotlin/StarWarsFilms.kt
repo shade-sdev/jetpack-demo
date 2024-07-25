@@ -4,8 +4,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
 
-object StarWarsFilms : IntIdTable() {
-    val sequelId: Column<Int> = integer("sequel_id").uniqueIndex()
+object StarWarsFilms : IntIdTable(name = "star_wars") {
+    val sequelId: Column<Int> = integer("sequel_id")
     val name: Column<String> = varchar("name", 50)
     val director: Column<String> = varchar("director", 50)
 }
