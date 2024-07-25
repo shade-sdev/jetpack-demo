@@ -65,6 +65,7 @@ val databaseModule = module {
         isReadOnly = false
         transactionIsolation = "TRANSACTION_SERIALIZABLE"
     }
+
     val dataSource = HikariDataSource(config)
     val flyway = Flyway.configure().dataSource(dataSource).load()
 
@@ -72,6 +73,7 @@ val databaseModule = module {
         flyway.migrate()
         Database.connect(dataSource)
     }
+
     single { AppInitializer() }
 }
 
