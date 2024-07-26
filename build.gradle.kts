@@ -28,16 +28,16 @@ dependencies {
     implementation(compose.materialIconsExtended)
     implementation(compose.material3)
 
-    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
-    implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+    implementation("cafe.adriel.voyager", "voyager-navigator", voyagerVersion)
+    implementation("cafe.adriel.voyager", "voyager-transitions", voyagerVersion)
 
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    implementation("io.insert-koin:koin-compose:$koinComposeVersion")
-    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+    implementation("io.insert-koin", "koin-core", koinVersion)
+    implementation("io.insert-koin", "koin-compose", koinComposeVersion)
+    implementation("io.insert-koin", "koin-logger-slf4j", koinVersion)
 
-    implementation("org.flywaydb:flyway-core:$flywayVersion")
-    implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
-    implementation("com.zaxxer:HikariCP:$hikariVersion")
+    implementation("org.flywaydb", "flyway-core", flywayVersion)
+    implementation("org.xerial", "sqlite-jdbc", sqliteVersion)
+    implementation("com.zaxxer", "HikariCP", hikariVersion)
 
     implementation("org.jetbrains.exposed", "exposed-core", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)
