@@ -7,6 +7,8 @@ val koinComposeVersion: String by project
 val sqliteVersion: String by project
 val flywayVersion: String by project
 val hikariVersion: String by project
+val sl4jVersion: String by project
+val logbackVersion: String by project
 
 plugins {
     kotlin("jvm")
@@ -45,8 +47,9 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
 
-    implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("ch.qos.logback:logback-classic:1.5.6")
+    implementation("org.slf4j", "slf4j-api", sl4jVersion)
+    implementation("ch.qos.logback", "logback-classic", logbackVersion)
+
 }
 
 compose.desktop {
