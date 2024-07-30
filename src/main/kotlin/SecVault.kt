@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -36,8 +37,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import org.koin.compose.koinInject
 import ui.theme.Font
 import ui.theme.PasswordColors
 import java.time.LocalDateTime
@@ -45,14 +46,20 @@ import java.time.format.DateTimeFormatter
 
 class SecVault : Screen {
 
-    @Composable
-    override fun Content() {
-        val userRepository: StarwarsRepository = koinInject()
-
-        println("StarWars Films: ${userRepository.findAll().joinToString { it.name }}")
-        SecVaultContent()
+    companion object {
+        val LocalSecVaultViewModel = staticCompositionLocalOf<SecVaultViewModel> {
+            error("No SecVaultViewModel provided")
+        }
     }
 
+    @Composable
+    override fun Content() {
+        val viewModel = koinScreenModel<SecVaultViewModel>()
+        CompositionLocalProvider(LocalSecVaultViewModel provides viewModel) {
+            SecVaultContent()
+        }
+
+    }
 }
 
 @Composable
@@ -182,9 +189,11 @@ fun PasswordMisc() {
             }
         }
 
-        Row(modifier = Modifier.weight(4f),
+        Row(
+            modifier = Modifier.weight(4f),
             horizontalArrangement = Arrangement.spacedBy(20.dp, alignment = Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically)
+            verticalAlignment = Alignment.CenterVertically
+        )
         {
 
             Column() {
@@ -228,7 +237,12 @@ fun PasswordMisc() {
             Column() {
 
                 Row() {
-                    Column(verticalArrangement = Arrangement.spacedBy((-4).dp, alignment = Alignment.CenterVertically)) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(
+                            (-4).dp,
+                            alignment = Alignment.CenterVertically
+                        )
+                    ) {
 
                         Row() {
                             Text(
@@ -251,7 +265,12 @@ fun PasswordMisc() {
                 }
 
                 Row() {
-                    Column(verticalArrangement = Arrangement.spacedBy((-4).dp, alignment = Alignment.CenterVertically)) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(
+                            (-4).dp,
+                            alignment = Alignment.CenterVertically
+                        )
+                    ) {
 
                         Row() {
                             Text(
@@ -538,7 +557,10 @@ fun PasswordItem() {
 
     Row(
         modifier = Modifier.height(60.dp).fillMaxWidth()
-            .background(if (isHovered) PasswordColors.tertiary else Color.Transparent, shape = RoundedCornerShape(6.dp))
+            .background(
+                if (isHovered) PasswordColors.tertiary else Color.Transparent,
+                shape = RoundedCornerShape(6.dp)
+            )
             .padding(PaddingValues(start = 5.dp, end = 5.dp))
             .clickable(onClick = {}, indication = null, interactionSource = interactionSource)
             .hoverable(interactionSource),
@@ -789,6 +811,9 @@ fun SideBar() {
 
 @Composable
 fun SideBarMenu() {
+    val viewModel = SecVault.LocalSecVaultViewModel.current
+    val menuItems by viewModel.menuItems.collectAsState()
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -813,7 +838,7 @@ fun SideBarMenu() {
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                SideBarMenuSection()
+                SideBarMenuSection(menuItems, viewModel::selectMenuItem)
             }
 
             Text(
@@ -828,7 +853,7 @@ fun SideBarMenu() {
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                SideBarMenuSection()
+                SideBarMenuSection(menuItems, viewModel::selectMenuItem)
 
             }
         }
@@ -836,26 +861,27 @@ fun SideBarMenu() {
 }
 
 @Composable
-fun SideBarMenuSection() {
-    Column {
-        Spacer(Modifier.height(2.dp))
-        SideBarMenuItem("Passwords",
-                        Icons.Default.Security,
-                        onClick = {
-                            println("Hello")
-                        })
+fun SideBarMenuSection(menuItems: List<MenuItem>, onMenuItemClick: (Int) -> Unit) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(1),
+        verticalArrangement = Arrangement.spacedBy(4.dp, alignment = Alignment.CenterVertically)
+    )
+    {
+        itemsIndexed(menuItems) { index, menuItem ->
+            SideBarMenuItem(menuItem.title,
+                            menuItem.selected,
+                            Icons.Default.Security,
+                            onClick = { onMenuItemClick(index) })
+        }
 
-        SideBarMenuItem("Notes",
-                        Icons.Default.NoteAlt,
-                        onClick = {
-                            println("Hello")
-                        })
     }
+
 }
 
 @Composable
 fun SideBarMenuItem(
         text: String,
+        selected: Boolean,
         icon: ImageVector,
         onClick: () -> Unit = {},
         backgroundColor: Color = Color.Transparent,
@@ -874,7 +900,10 @@ fun SideBarMenuItem(
             .height(34.dp)
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(if (isHovered) hoverColor else backgroundColor, shape = RoundedCornerShape(CornerSize(10.dp)))
+            .background(
+                if (isHovered || selected) hoverColor else backgroundColor,
+                shape = RoundedCornerShape(CornerSize(10.dp))
+            )
 
     ) {
         Spacer(modifier = Modifier.width(2.dp))
@@ -882,7 +911,7 @@ fun SideBarMenuItem(
             imageVector = icon,
             contentDescription = "",
             modifier = Modifier.size(16.dp),
-            tint = if (isHovered) Color.White else PasswordColors.outline
+            tint = if (isHovered || selected) Color.White else PasswordColors.outline
         )
         Text(
             text = text,
@@ -1084,7 +1113,9 @@ fun UnderLineTextFiled(
                 ) {
                     Column {
                         if (isPassword) {
-                            IconToggleButton(checked = passwordVisible, onCheckedChange = { passwordVisible = it }) {
+                            IconToggleButton(
+                                checked = passwordVisible,
+                                onCheckedChange = { passwordVisible = it }) {
                                 Icon(
                                     imageVector = if (passwordVisible) Icons.Default.VisibilityOff
                                     else Icons.Default.Visibility,

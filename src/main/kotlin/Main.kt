@@ -27,7 +27,7 @@ import ui.theme.customTypography
 
 fun main() = application {
     startKoin {
-        modules(databaseModule, repositoryModule)
+        modules(databaseModule, repositoryModule, applicationModule)
     }
 
     val colors = if (!isSystemInDarkTheme()) LightColors else DarkColors
@@ -77,4 +77,8 @@ val databaseModule = module {
 
 val repositoryModule = module {
     single { StarwarsRepository() }
+}
+
+val applicationModule = module {
+    factory { SecVaultViewModel() }
 }

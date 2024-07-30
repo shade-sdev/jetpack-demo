@@ -9,6 +9,7 @@ val flywayVersion: String by project
 val hikariVersion: String by project
 val sl4jVersion: String by project
 val logbackVersion: String by project
+val coroutineVersion: String by project
 
 plugins {
     kotlin("jvm")
@@ -34,6 +35,7 @@ dependencies {
     implementation("cafe.adriel.voyager", "voyager-transitions", voyagerVersion)
     implementation("cafe.adriel.voyager", "voyager-screenmodel", voyagerVersion)
     implementation("cafe.adriel.voyager", "voyager-koin", voyagerVersion)
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-swing", coroutineVersion)
 
     implementation("io.insert-koin", "koin-core", koinVersion)
     implementation("io.insert-koin", "koin-compose", koinComposeVersion)
