@@ -20,10 +20,12 @@ class SecVaultViewModel : ScreenModel {
     }
 
     fun selectMenuItem(index: Int) {
-        val updatedItems = _menuItems.value.mapIndexed { i, menuItem ->
-            menuItem.copy(selected = i == index)
+        screenModelScope.launch {
+            val updatedItems = _menuItems.value.mapIndexed { i, menuItem ->
+                menuItem.copy(selected = i == index)
+            }
+            _menuItems.value = updatedItems
         }
-        _menuItems.value = updatedItems
     }
 
 }
